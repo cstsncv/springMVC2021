@@ -11,7 +11,7 @@ public class TestController {
     }
 
 
-    @RequestMapping("/param")
+    @RequestMapping("/param1")
     public String testParam(){
         return "test_param";
     }
