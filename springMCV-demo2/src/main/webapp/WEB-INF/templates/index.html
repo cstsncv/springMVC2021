@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+首页
+<a th:href="@{/hello/target}">target的链接</a><br>
+<a th:href="@{/target}">target的链接</a><br>
+<a th:href="@{/requestMapping}">requestMapping的链接</a><br>
+<a th:href="@{/requestMapping}">测试RequestMapping的method属性--GET</a><br>
+<form th:action="@{/target}" method="post">
+    <input type="submit" th:value="测试RequestMapping的method属性--POST">
+</form>
+
+<a th:href="@{/testParamsAndHeaders(username='admin', password='111')}">测试RequestMapping的params属性</a><br>
+<a th:href="@{/testPathVariable/1/csts}">测试testPathVariable</a><br>
+
+</body>
+</html>
