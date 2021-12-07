@@ -12,6 +12,7 @@
         <module>springMVC-demo1</module>
         <module>springMCV-demo2</module>
         <module>springMVC-demo3</module>
+        <module>springMVC-demo4-rest</module>
     </modules>
 
 
