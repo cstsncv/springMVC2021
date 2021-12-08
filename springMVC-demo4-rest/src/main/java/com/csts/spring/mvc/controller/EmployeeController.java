@@ -32,4 +32,24 @@ public class EmployeeController {
         employeeDao.delete(id);
         return "redirect:/employee";
     }
+
+
+    @PostMapping("/employee")
+    public String addEmployee(Employee employee){
+        employeeDao.save(employee);
+        return "redirect:/employee";
+    }
+
+    @GetMapping("/employee/{id}")
+    public String getEmployeeById(@PathVariable("id") Integer id, Model model){
+        Employee employee = employeeDao.get(id);
+        model.addAttribute("employee", employee);
+        return "employee_update";
+    }
+
+    @PutMapping("/employee")
+    public String updateEmployee(Employee employee){
+        employeeDao.save(employee);
+        return "redirect:/employee";
+    }
 }
