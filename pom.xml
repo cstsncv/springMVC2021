@@ -15,6 +15,7 @@
         <module>springMVC-demo4-rest</module>
         <module>springMVC-demo5</module>
         <module>springMVC-demo6</module>
+        <module>springMVC-demo7-annotation</module>
     </modules>
 
 
