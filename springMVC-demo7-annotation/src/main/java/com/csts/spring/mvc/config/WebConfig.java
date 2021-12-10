@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -19,12 +21,16 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 // 将当前类标识为一个配置类
 @Configuration
 // 1. 扫描组件
-@ComponentScan
+@ComponentScan("com.csts.spring.mvc.controller")
 // 开启mvc注解驱动
 @EnableWebMvc
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
-
+    // 开启default-servlet-handler
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
     //配置生成模板解析器
     @Bean
@@ -56,4 +62,5 @@ public class WebConfig {
         viewResolver.setTemplateEngine(templateEngine);
         return viewResolver;
     }
+
 }
