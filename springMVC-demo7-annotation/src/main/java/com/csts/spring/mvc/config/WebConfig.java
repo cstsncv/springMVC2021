@@ -1,19 +1,25 @@
 package com.csts.spring.mvc.config;
 
+import com.csts.spring.mvc.interceptor.TestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
+import java.util.List;
+import java.util.Properties;
 
 
 //代替SpringMVC的配置文件
@@ -63,4 +69,38 @@ public class WebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    // 拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        TestInterceptor testInterceptor = new TestInterceptor();
+        registry.addInterceptor(testInterceptor).addPathPatterns("/**");
+    }
+
+    // view-controller
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/hello").setViewName("hello");
+    }
+
+    // 文件上传解析器
+    @Bean
+    public MultipartResolver multipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        return commonsMultipartResolver;
+    }
+
+    // 异常处理
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
+
+        Properties properties = new Properties();
+        properties.setProperty("java.lang.ArithmeticException", "error");
+
+        simpleMappingExceptionResolver.setExceptionMappings(properties);
+        // 请求域共享异常信息
+        simpleMappingExceptionResolver.setExceptionAttribute("exception");
+
+        resolvers.add(simpleMappingExceptionResolver);
+    }
 }
